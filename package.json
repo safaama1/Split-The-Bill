@@ -1,0 +1,29 @@
+{
+  "name": "advanced-final-project",
+  "version": "1.0.0",
+  "description": "This is the final project",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "nodemon": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/safaama1/Advanced-Final-Project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/safaama1/Advanced-Final-Project/issues"
+  },
+  "homepage": "https://github.com/safaama1/Advanced-Final-Project#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.13.6"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "nodemon": "^2.0.12"
+  }
+}
