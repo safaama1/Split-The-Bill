@@ -18,4 +18,8 @@ mongoose.connect('mongodb://localhost:27017',{
     
 });
 
+app.get('/signup', (req, res) => {
+	res.sendFile(path.resolve('SignUp.html'));
+});
+
 app.listen(3000);
