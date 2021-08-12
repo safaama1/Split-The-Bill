@@ -1,7 +1,21 @@
 const express = require('express');
 const app = express();
+// eslint-disable-next-line no-unused-vars
 const path = require('path');
 app.use('/assets', express.static('static-assets'));
 
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost:27017',{
+	dbName:'myApp',
+	auth:{
+		user: 'root',
+		password: 'example',
+		authdb: 'admin'
+	},
+	useCreateIndex: true,
+	useNewUrlParser: true,  
+	useUnifiedTopology: true,
+    
+});
 
 app.listen(3000);
