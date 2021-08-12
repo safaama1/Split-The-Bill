@@ -17,6 +17,9 @@ mongoose.connect('mongodb://localhost:27017',{
 	useUnifiedTopology: true,
     
 });
+app.get('/', (req, res) => {
+	res.sendFile(path.resolve('main.html'));
+});
 
 app.get('/signup', (req, res) => {
 	res.sendFile(path.resolve('SignUp.html'));
