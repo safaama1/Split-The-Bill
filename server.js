@@ -1,7 +1,9 @@
 const express = require('express');
 const app = express();
-// eslint-disable-next-line no-unused-vars
 const path = require('path');
+// eslint-disable-next-line no-unused-vars
+const usersService = require('./services/users');
+
 app.use('/assets', express.static('static-assets'));
 
 const mongoose = require('mongoose');
