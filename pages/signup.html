@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="shortcut icon" type="image/svg" href="/assets/images/icon.png">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css"
+        integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&display=swap" rel="stylesheet" />
+
+
+    <link rel="stylesheet" href="/assets/css/SignUp.css">
+</head>
+
+<body>
+    <script>
+        function CheckPasswordStrength(password) {
+            var password_strength = document.getElementById("password_strength");
+
+
+            //if textBox is empty
+            if (password.length == 0) {
+                password_strength.innerHTML = "";
+                return;
+            }
+
+            //Regular Expressions
+            var regex = new Array();
+            regex.push("[A-Z]"); //For Uppercase Alphabet
+            regex.push("[a-z]"); //For Lowercase Alphabet
+            regex.push("[0-9]"); //For Numeric Digits
+            regex.push("[$@$!%*#?&]"); //For Special Characters
+
+            var passed = 0;
+
+            //Validation for each Regular Expression
+            for (var i = 0; i < regex.length; i++) {
+                if ((new RegExp(regex[i])).test(password)) {
+                    passed++;
+                }
+            }
+
+            //Validation for Length of Password
+            if (passed > 2 && password.length > 8) {
+                passed++;
+            }
+
+            //Display of Status
+            var color = "";
+            var passwordStrength = "";
+            switch (passed) {
+                case 0:
+                    break;
+                case 1:
+                    passwordStrength = "Password is Weak.";
+                    color = "Red";
+                    break;
+                case 2:
+                    passwordStrength = "Password is Good.";
+                    color = "darkorange";
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    passwordStrength = "Password is Strong.";
+                    color = "Green";
+                    break;
+                case 5:
+                    passwordStrength = "Password is Very Strong.";
+                    color = "darkgreen";
+                    break;
+            }
+            password_strength.innerHTML = passwordStrength;
+            password_strength.style.color = color;
+        }
+
+        function passwords_match(password1) {
+            console.log(password1,document.getElementsByName("password")[0].value);
+            if (password1 === document.getElementsByName("password")[0].value) {
+                document.getElementById("password_matching").textContent= 'Passwords Match';
+                document.getElementById("password_matching").style.color = 'Green';
+            }
+            else{
+                document.getElementById("password_matching").textContent='Passwords Dont Match';
+                document.getElementById("password_matching").style.color = 'Red';
+            }
+
+        }
+    </script>
+    <nav class="navbar">
+        <div class="navbar__container">
+            <a href="../" id="navbar__logo"><i class="fas fa-money-bill-wave">&nbsp;&nbsp;</i>Split The Bill</a>
+        </div>
+    </nav>
+    <div class="center">
+        <h1>Sign Up</h1>
+
+        <form method="POST" action="/account/signup">
+            <div class="txt_field">
+                <input type="text" name="email" required>
+                <span></span>
+                <label>Email</label>
+            </div>
+            <div class="txt_field">
+                <input type="text" name="username" required>
+                <span></span>
+                <label>Username</label>
+            </div>
+            <div class="txt_field">
+                <input type="password" name="password" required  onkeyup="CheckPasswordStrength(this.value)">
+                <label>Password</label>
+            </div>
+            <span id="password_strength"></span>
+
+            <div class="txt_field">
+                <input type="password" name="passwordAuth" required onkeyup="passwords_match(this.value)">
+                <label>Repeat Password</label>
+            </div>
+            <span id="password_matching"></span>
+
+            <div class="SubmitButton">
+                <input type="submit" value="Join">
+            </div>
+            <div class="signup_link">
+                Alerady a member? <a href="logIn">Login</a>
+            </div>
+
+        </form>
+
+
+    </div>
+
+</body>
+
+</html>
