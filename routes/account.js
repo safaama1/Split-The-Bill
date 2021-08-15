@@ -45,7 +45,7 @@ router.post('/signup', async (req, res) => {
 	try {
 		if(passwordAuth===password&&validateEmail(email)&&CheckPasswordStrength(password)!=='Red')
 		{	
-			const user = await usersService.addUser(email, username, password);
+			const user = await usersService.addUser( username, email, password);
 			req.session.authenticated = true;
 			req.session.id = user._id;
 			req.session.username = user.username;
