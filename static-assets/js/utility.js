@@ -1,5 +1,5 @@
-function getCookieObject(){
-	
+function getCookieObject() {
+
 	return document.cookie
 		.split(';')
 		.reduce((res, c) => {
