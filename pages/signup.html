@@ -10,44 +10,35 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css"
         integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous" />
     <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&display=swap" rel="stylesheet" />
-
-
-    <link rel="stylesheet" href="/assets/css/SignUp.css">
+    <link rel="stylesheet" href="/assets/css/signUp.css">
 </head>
 
 <body>
     <script>
         function CheckPasswordStrength(password) {
             var password_strength = document.getElementById("password_strength");
-
-
             //if textBox is empty
             if (password.length == 0) {
                 password_strength.innerHTML = "";
                 return;
             }
-
             //Regular Expressions
             var regex = new Array();
             regex.push("[A-Z]"); //For Uppercase Alphabet
             regex.push("[a-z]"); //For Lowercase Alphabet
             regex.push("[0-9]"); //For Numeric Digits
             regex.push("[$@$!%*#?&]"); //For Special Characters
-
             var passed = 0;
-
             //Validation for each Regular Expression
             for (var i = 0; i < regex.length; i++) {
                 if ((new RegExp(regex[i])).test(password)) {
                     passed++;
                 }
             }
-
             //Validation for Length of Password
             if (passed > 2 && password.length > 8) {
                 passed++;
             }
-
             //Display of Status
             var color = "";
             var passwordStrength = "";
@@ -78,16 +69,15 @@
         }
 
         function passwords_match(password1) {
-            console.log(password1,document.getElementsByName("password")[0].value);
+            console.log(password1, document.getElementsByName("password")[0].value);
             if (password1 === document.getElementsByName("password")[0].value) {
-                document.getElementById("password_matching").textContent= 'Passwords Match';
+                document.getElementById("password_matching").textContent = 'Passwords Match';
                 document.getElementById("password_matching").style.color = 'Green';
             }
-            else{
-                document.getElementById("password_matching").textContent='Passwords Dont Match';
+            else {
+                document.getElementById("password_matching").textContent = 'Passwords Dont Match';
                 document.getElementById("password_matching").style.color = 'Red';
             }
-
         }
     </script>
     <nav class="navbar">
@@ -110,7 +100,7 @@
                 <label>Username</label>
             </div>
             <div class="txt_field">
-                <input type="password" name="password" required  onkeyup="CheckPasswordStrength(this.value)">
+                <input type="password" name="password" required onkeyup="CheckPasswordStrength(this.value)">
                 <label>Password</label>
             </div>
             <span id="password_strength"></span>
@@ -127,12 +117,8 @@
             <div class="signup_link">
                 Alerady a member? <a href="logIn">Login</a>
             </div>
-
         </form>
-
-
     </div>
-
 </body>
 
 </html>

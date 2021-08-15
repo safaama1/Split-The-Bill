@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 const app = express();
 app.use('/assets', express.static('static-assets'));
 mongoose.connect('mongodb://localhost:27017', {
-	dbName: 'myApp',
+	dbName: 'SplitTheBill',
 	auth: {
 		user: 'root',
 		password: 'example',

@@ -1,4 +1,3 @@
-const { response } = require('express');
 const express = require('express');
 const path = require('path');
 const router = express.Router();
@@ -29,31 +28,30 @@ router.post('/login', async (req, res) => {
 	if (!user || user.password !== password) {
 		return res.redirect('/account/login');
 	}
-	
-	res.cookie('userInfo',JSON.stringify({userName:username}));
-
+	res.cookie('userInfo', JSON.stringify({ userName: username }));
 	req.session.authenticated = true;
 	req.session.userId = user._id;
 	req.session.username = user.username;
 	res.redirect(req.baseUrl + '/');
 });
 
+
+
 /** should return a signup page */
 router.get('/signup', ensureLoggedOut, (req, res) => {
-	res.sendFile(path.resolve('pages/signup.html'));
+	res.sendFile(path.resolve('pages/signUp.html'));
 });
 
 /** should handle signup logic, log in the user, and redirect to homepage */
 router.post('/signup', async (req, res) => {
-	const {  email, username, password, passwordAuth } = req.body;
+	const { email, username, password, passwordAuth } = req.body;
 	try {
-		if(passwordAuth===password&&validateEmail(email)&&CheckPasswordStrength(password)!=='Red')
-		{	
-			const user = await usersService.addUser( email, username, password);
+		if (passwordAuth === password && validateEmail(email) && CheckPasswordStrength(password) !== 'Red') {
+			const user = await usersService.addUser(username, email, password);
 			req.session.authenticated = true;
 			req.session.id = user._id;
 			req.session.username = user.username;
-		}		
+		}
 		res.redirect(req.baseUrl);
 	} catch (error) {
 		console.log(error);
@@ -70,46 +68,37 @@ router.get('/logout', ensureLoggedOut, (req, res) => {
 router.get('/', authorize, async (req, res) => {
 	res.sendFile(path.resolve('pages/profile.html'));
 });
-function validateEmail(email) 
-{
+
+function validateEmail(email) {
 	var re = /\S+@\S+\.\S+/;
 	return re.test(email);
 }
-    
 
 function CheckPasswordStrength(password) {
-
-  
 	//if textBox is empty
-	if(password.length==0){
-		
+	if (password.length == 0) {
 		return 'Red';
 	}
-  
 	//Regular Expressions
 	var regex = new Array();
 	regex.push('[A-Z]'); //For Uppercase Alphabet
 	regex.push('[a-z]'); //For Lowercase Alphabet
 	regex.push('[0-9]'); //For Numeric Digits
 	regex.push('[$@$!%*#?&]'); //For Special Characters
-  
 	var passed = 0;
-  
 	//Validation for each Regular Expression
 	for (var i = 0; i < regex.length; i++) {
-		if((new RegExp (regex[i])).test(password)){
+		if ((new RegExp(regex[i])).test(password)) {
 			passed++;
 		}
 	}
-  
 	//Validation for Length of Password
-	if(passed > 2 && password.length > 8){
+	if (passed > 2 && password.length > 8) {
 		passed++;
 	}
-  
 	//Display of Status
 	var color = '';
-	switch(passed){
+	switch (passed) {
 	case 0:
 		break;
 	case 1:

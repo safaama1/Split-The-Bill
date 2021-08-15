@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
-const User=mongoose.model('User', {
+const User = mongoose.model('User', {
 	username: {
-		type:String,
+		type: String,
 		required: true,
 		unique: true
 	},
 	email: {
-		type:String,
+		type: String,
 		required: true,
 		unique: true
 	},
@@ -15,8 +15,8 @@ const User=mongoose.model('User', {
 		required: true
 	},
 	created: {
-		type:Date,
-		default:Date.now
+		type: Date,
+		default: Date.now
 	}
 });
 
