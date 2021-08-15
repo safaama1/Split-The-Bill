@@ -1,3 +1,4 @@
+const { response } = require('express');
 const express = require('express');
 const path = require('path');
 const router = express.Router();
@@ -28,6 +29,9 @@ router.post('/login', async (req, res) => {
 	if (!user || user.password !== password) {
 		return res.redirect('/account/login');
 	}
+	
+	res.cookie('userInfo',JSON.stringify({userName:username}));
+
 	req.session.authenticated = true;
 	req.session.userId = user._id;
 	req.session.username = user.username;
@@ -45,7 +49,7 @@ router.post('/signup', async (req, res) => {
 	try {
 		if(passwordAuth===password&&validateEmail(email)&&CheckPasswordStrength(password)!=='Red')
 		{	
-			const user = await usersService.addUser(email, username, password);
+			const user = await usersService.addUser( email, username, password);
 			req.session.authenticated = true;
 			req.session.id = user._id;
 			req.session.username = user.username;
