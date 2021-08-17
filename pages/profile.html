@@ -44,8 +44,34 @@
           <h1>SAVE YOUR TIME AND MONEY</h1>
           <p>Join your friends and split the bill or scan the bill and let your friends join
           </p>
-          <button class="main__btn"><a href="#">Scan The Bill&nbsp;&nbsp;<i class="fas fa-qrcode"></i></a></button>
-          <button class="main__btn"><a href="#">Join Your Friends&nbsp;&nbsp;<i class="fas fa-users"></i></a></button>
+          <div class="dropdown">
+            <button onclick="myFunction()" class="main__btn">
+              <a>
+                Scan The Bill&nbsp;&nbsp;
+                <i class="fas fa-qrcode">
+                </i>
+              </a>
+            </button>
+            <div id="myDropdown" class="dropdown-content">
+              <a href="#">
+                Take a picture&nbsp;&nbsp;
+                <i class="fa fa-camera" aria-hidden="true">
+                </i>
+              </a>
+              <a href="#">
+                Upload a picture&nbsp;&nbsp;
+                <i class="fa fa-upload" aria-hidden="true">
+                </i>
+              </a>
+            </div>
+          </div>
+          <button class="main__btn">
+            <a>
+              Join Your Friends&nbsp;&nbsp;
+              <i class="fas fa-users">
+              </i>
+            </a>
+          </button>
         </div>
       </div>
       <div class="slideshow-container">
@@ -79,15 +105,18 @@
       </div>
     </div>
   </div>
-
+  <!-- script to show the menu icon when the screen is smaller (phones screen) which show the whole navbar links  -->
   <script src="/assets/js/main-menu.js"></script>
+  <!-- script to show the slide show dots  -->
   <script src="/assets/js/profile.js"></script>
+  <!-- script to show the massage "Welcome {userName}" at the top of the profile page -->
   <script src="/assets/js/utility.js"></script>
   <script defer>
     var cookieObject = getCookieObject();
     console.log(cookieObject);
-    document.getElementById("username").innerText = "Welcome " +  cookieObject.userInfo.userName + " !"
+    document.getElementById("username").innerText = "Welcome " + cookieObject.userInfo.userName + " !"
   </script>
+  <script src="/assets/js/drop-down.js"></script>
 </body>
 
 </html>
