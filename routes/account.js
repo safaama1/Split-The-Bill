@@ -50,9 +50,12 @@ router.post('/signup', async (req, res) => {
 			const user = await usersService.addUser(username, email, password);
 			req.session.authenticated = true;
 			req.session.id = user._id;
+			res.cookie('userInfo', JSON.stringify({ userName: username }));
+			req.session.authenticated = true;
+			req.session.userId = user._id;
 			req.session.username = user.username;
 		}
-		res.redirect(req.baseUrl);
+		res.redirect(req.baseUrl + '/');
 	} catch (error) {
 		console.log(error);
 		res.redirect(req.baseUrl + '/signup');
