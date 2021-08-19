@@ -11,6 +11,7 @@
     integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous" />
   <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <script src='https://unpkg.com/tesseract.js@v2.1.0/dist/tesseract.min.js'></script>
 </head>
 
 <body bgcolor="#222629">
@@ -50,7 +51,7 @@
                   Scan The Bill&nbsp;&nbsp;
                   <i class="fas fa-qrcode"></i>
                 </a>
-                <input type="file" accept="image/*" id="file-input">
+                <input type="file" accept="image/*" id="image">
             </label>
           </div>
           <button class="main__btn">
@@ -105,6 +106,7 @@
     document.getElementById("username").innerText = "Welcome " + cookieObject.userInfo.userName + " !"
   </script>
   <script src="/assets/js/drop-down.js"></script>
+  <script  defer src="/assets/js/imageToText.js"></script>
 </body>
 
 </html>
