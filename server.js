@@ -16,7 +16,7 @@ mongoose.connect('mongodb://localhost:27017', {
 	useCreateIndex: true,
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
-
+	
 });
 
 
@@ -34,6 +34,9 @@ app.use(session({
 	resave: false,
 	saveUninitialized: false
 }));
+
+const roomRouter = require('./routes/room');
+app.use('/account/room', roomRouter);
 
 app.use('/account', accountRouter);
 app.get('/', (req, res) => res.sendFile(path.resolve('pages/main.html')));

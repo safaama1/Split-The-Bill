@@ -47,15 +47,15 @@
           </p>
           <br>
           <br>
-            <label class="main__btn2">
-                <a>
-                  Scan The Bill&nbsp;&nbsp;
-                  <i class="fas fa-qrcode"></i>
-                </a>
-                <input type="file" accept="image/*" id="image">
-            </label>
-          <button class="main__btn">
+          <label class="main__btn2">
             <a>
+              Scan The Bill&nbsp;&nbsp;
+              <i class="fas fa-qrcode"></i>
+            </a>
+            <input type="file" accept="image/*" id="image">
+          </label>
+          <button class="main__btn">
+            <a href="/account/room">
               Join Your Friends&nbsp;&nbsp;
               <i class="fas fa-users">
               </i>
@@ -64,15 +64,12 @@
         </div>
       </div>
       <div class="slideshow-container">
-
         <div class="mySlides fade">
           <img src="/assets/images/pic5.jpg" style="width:100%">
         </div>
-
         <div class="mySlides fade">
           <img src="/assets/images/pic6.jpg" style="width:100%">
         </div>
-
         <div class="mySlides fade">
           <img src="/assets/images/pic4.jpg" style="width:100%">
         </div>
@@ -105,9 +102,9 @@
     console.log(cookieObject);
     document.getElementById("username").innerText = "Welcome " + cookieObject.userInfo.userName + " !"
   </script>
-   <div id="progress"></div>
+  <div id="progress"></div>
   <script src="/assets/js/drop-down.js"></script>
-  <script  defer src="/assets/js/imageToText.js"></script>
+  <script defer src="/assets/js/imageToText.js"></script>
 </body>
 
 </html>
