@@ -1,61 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login</title>
-  <link rel="shortcut icon" type="image/svg" href="images/icon.png">
-  <link rel="stylesheet" href="css/logIn.css">
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="shortcut icon" type="image/svg" href="/assets/images/icon.png">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css"
     integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous" />
-    <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&display=swap" rel="stylesheet" />
-  </head>
-  
+  <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/css/signUp.css">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
 
-
-  <body bgcolor="#222629">
-    <nav class="navbar">
-      <div class="navbar__container">
-        <a href="" id="navbar__logo"><i class="fas fa-money-bill-wave">&nbsp;&nbsp;</i>Split The Bill</a>
-        <div class="navbar__toggle" id="mobile-menu">
-          <span class="bar"></span> <span class="bar"></span>
-          <span class="bar"></span>
-        </div>
-        <ul class="navbar__menu">
-          <li class="navbar__item">
-            <a href="#" class="navbar__links">Home</a>
-          </li>
-          <li class="navbar__item">
-            <a href="aboutus.html" class="navbar__links">About Us</a>
-          </li>
-          <li class="navbar__item">
-            <a href="logIn.html" class="navbar__links">Login</a>
-          </li>
-          <li class="navbar__btn"><a href="/" class="button">Sign Up</a></li>
-        </ul>
-      </div>
-    </nav>
- 
-    <div class="center">
-      <h1>Login</h1>
-      <form method="post">
-        <div class="txt_field">
-          <input type="text" required>
-          <span></span>
-          <label>Username</label>
-        </div>
-        <div class="txt_field">
-          <input type="password" required>
-          <span></span>
-          <label>Password</label>
-        </div>
-        <!-- <div class="pass">Forgot Password?</div> -->
-        <input type="submit" value="Login">
-        <div class="signup_link">
-          Not a member? <a href="#">Signup</a>
-        </div>
-      </form>
+<body bgcolor="#222629">
+  <nav class="navbar">
+    <div class="navbar__container">
+      <a href="../" id="navbar__logo"><i class="fas fa-money-bill-wave">&nbsp;&nbsp;</i>Split The Bill</a>
     </div>
+  </nav>
+  <div class="center">
+    <h1>Login</h1>
+    <form method="POST" action="/account/login">
+      <div class="txt_field">
+        <input type="text" name="username" required>
+        <span></span>
+        <label>Username</label>
+      </div>
+      <div class="txt_field">
+        <input type="password" name="password" required>
+        <span></span>
+        <label>Password</label>
+      </div>
+      <!-- <div class="pass">Forgot Password?</div> -->
+      <input type="submit" value="Login">
+      <div class="signup_link">
+        Not a member? <a href="signup">Signup</a>
+      </div>
+    </form>
+  </div>
+</body>
 
-  </body>
 </html>
