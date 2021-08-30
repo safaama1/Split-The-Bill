@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const billModel = require('./Bill');
 const User = mongoose.model('User', {
 	username: {
 		type: String,
@@ -17,7 +18,8 @@ const User = mongoose.model('User', {
 	created: {
 		type: Date,
 		default: Date.now
-	}
+	},
+	bills: [billModel]
 });
 
 module.exports = User;

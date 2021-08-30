@@ -16,5 +16,9 @@ class UsersService {
 	async findById(id) {
 		return UserModel.findById(id);
 	}
+	async addBill(userName,bill){
+		//todo add without duplicating student
+		//findByName(userName);
+	}
 }
 module.exports = new UsersService();

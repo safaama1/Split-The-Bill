@@ -1,6 +1,6 @@
 var input = document.getElementById('image');
 var progress=document.getElementById('progress');
-//define and initiate FRL first relevant elements
+//define and initiate FRL ,first relevant elements
 var FRES=[];
 function initiate_FRES()
 {
@@ -8,13 +8,28 @@ function initiate_FRES()
 	FRES.push('item');
 }
 initiate_FRES();
-//checks if array has an elemnt that is in FRL
+var LRES=[];
+function initiate_LRES()
+{
+	LRES.push('SubTotal');
+	LRES.push('Subtotal');
+	LRES.push('subtotal');
+	LRES.push('subTotal');
+}
+initiate_LRES();
+//checks if array has an elemnt that is in FRES
 // eslint-disable-next-line no-unused-vars
 function isInFRES(newString)
 {
 	return FRES.includes(newString);  
 }
-//checks if array starts with an elemnt that is in FRL
+//checks if array has an elemnt that is in LRES
+// eslint-disable-next-line no-unused-vars
+function isInLRES(newString)
+{
+	return LRES.includes(newString);  
+}
+//checks if array starts with an elemnt that is in FRES
 function startsWithFRES(array)
 {
 	for (let index = 0; index < FRES.length; index++) {
@@ -26,17 +41,19 @@ function startsWithFRES(array)
 	return false;
 }
 //uses tesseract.js to identify text in the image provided by the user then activates the function parse bill
-function recognizeBill()
+async function  recognizeBill()
 {
+	var temp;
 	// eslint-disable-next-line no-undef
-	Tesseract.recognize(input.files[0],'eng',{ preserve_interword_spaces: 1,logger:m =>{progress.innerHTML=m['progress'].toFixed(3); }}).then(result=>{
+	await Tesseract.recognize(input.files[0],'eng',{ preserve_interword_spaces: 1,logger:m =>{progress.innerHTML=m['progress'].toFixed(3); }}).then(result=>{
 		console.log(result.data.text);
 		return result.data.text.split( '\n' );
 	}).then(result=>{
-		console.log(parseBill(result));
+		temp= parseBill(result);
 	}).catch((err) => {
 		console.log(err.message);
 	});
+	return temp;
 }
 //checks if a string represents a number for example: ('127' => true) ('2h1e'=>false) (22=>false (not a string))
 function isNumeric(str) {
@@ -86,7 +103,6 @@ function indexOfFres(array)
 function parseBill(array)
 {
 	let fields = [];
-	fields.push('startOFFIelds');
 	//find the first relevant line aka the line that usualy begins with Item
 	let start=indexOfFres(array);
 	fields=array[start].split(' ').filter(e =>  e);
@@ -99,6 +115,8 @@ function parseBill(array)
 		parsedItem=array[index].split(' ').filter(e =>  e);
 		//merge all text in the begging of an array i.e. (['moto', 'g', '2', '1500', '3000']  => ['moto g', '2', '1500', '3000'] )
 		listofFinalItems.push(mergeNthFirstElements(parsedItem,numOfLeadingWords(parsedItem),' '));
+		if(isInLRES(parsedItem[0]))
+			break;
 	}	
 	return listofFinalItems;
 }
@@ -107,5 +125,5 @@ input.addEventListener('change', () => {
 	if (!input.files) {
 		return null;
 	}
-	recognizeBill();
+	console.log(recognizeBill());
 });
