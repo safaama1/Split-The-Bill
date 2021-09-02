@@ -19,7 +19,7 @@ const User = mongoose.model('User', {
 		type: Date,
 		default: Date.now
 	},
-	bills: [billModel]
+	bills: [billModel.schema]
 });
 
 module.exports = User;

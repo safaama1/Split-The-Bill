@@ -19,27 +19,10 @@ const Bill = mongoose.Schema( {
 		type: Date,
 		default: Date.now
 	},
+	BillNum: {
+		type: Number,
+		required: true
+	},
 	items: [itemSchema]
 });
-module.exports = Bill;
-// const Bill = mongoose.model('Bill', {
-// 	rawText: {
-// 		type: String,
-// 		required: true
-// 	},
-// 	Totalquantity:{
-// 		type: Number,
-// 		min: 0,
-// 		required: true
-// 	},
-// 	Totalamount:{
-// 		type: Number,
-// 		//min: 0,
-// 		required: true
-// 	},
-// 	created: {
-// 		type: Date,
-// 		default: Date.now
-// 	},
-// 	items: [itemSchema]
-// });
+module.exports = mongoose.model('Bill',Bill);

@@ -1,5 +1,5 @@
 var input = document.getElementById('image');
-var progress=document.getElementById('progress');
+//var progress=document.getElementById('progress');
 //define and initiate FRL ,first relevant elements
 var FRES=[];
 function initiate_FRES()
@@ -43,17 +43,32 @@ function startsWithFRES(array)
 //uses tesseract.js to identify text in the image provided by the user then activates the function parse bill
 async function  recognizeBill()
 {
-	var temp;
+	var billData=[];
 	// eslint-disable-next-line no-undef
-	await Tesseract.recognize(input.files[0],'eng',{ preserve_interword_spaces: 1,logger:m =>{progress.innerHTML=m['progress'].toFixed(3); }}).then(result=>{
-		console.log(result.data.text);
+	
+	//	await Tesseract.recognize(input.files[0],'eng',{ preserve_interword_spaces: 1,logger:m =>{progress.innerHTML=m['progress'].toFixed(3); }}).then(result=>{
+	await Tesseract.recognize(input.files[0],'eng',{ preserve_interword_spaces: 1}).then(result=>{
+		billData.push(result.data.text);
 		return result.data.text.split( '\n' );
 	}).then(result=>{
-		temp= parseBill(result);
+		billData.push(parseBill(result));
+		return parseBill(result);
 	}).catch((err) => {
 		console.log(err.message);
 	});
-	return temp;
+
+	//TODO replace numbers with constants
+
+	//total quantity i.e. number of items overall
+	billData.push(billData[1][billData[1].length-1][1]);
+	//total price i.e. the price of all items combined
+	billData.push(billData[1][billData[1].length-1][2]);
+
+	billData[1].pop();
+	
+	billData[1].shift();
+	
+	return billData;
 }
 //checks if a string represents a number for example: ('127' => true) ('2h1e'=>false) (22=>false (not a string))
 function isNumeric(str) {
@@ -121,9 +136,33 @@ function parseBill(array)
 	return listofFinalItems;
 }
 //when a user adds an image the function parseBill is activated
+async function loadEdit() {
+	var billDetails=recognizeBill();
+	return  billDetails;
+}
+
 input.addEventListener('change', () => {
-	if (!input.files) {
-		return null;
-	}
-	console.log(recognizeBill());
-});
+	loadEdit().then(( (billDetails)=>	{
+
+		if (!input.files) {
+			return null;
+		}
+
+		const rawText=billDetails[0];
+		const Totalquantity=billDetails[2];
+		const Totalamount=billDetails[3];
+		const items = JSON.stringify(Object.assign({}, billDetails[1]));
+		console.log(billDetails);
+
+		const data={rawText,Totalquantity,Totalamount, items};
+		const url='/account/room/api';
+		const options= {
+			method:'POST', 
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(data)
+		};
+		fetch(url,options);
+	}));
+}, false);
