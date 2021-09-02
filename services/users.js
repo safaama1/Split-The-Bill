@@ -17,8 +17,11 @@ class UsersService {
 		return UserModel.findById(id);
 	}
 	async addBill(userName,bill){
-		//todo add without duplicating student
-		//findByName(userName);
+		//TODO fix method
+		UserModel.updateOne(
+			{ name: userName },
+			{ $push: { bills:  bill } }
+		);
 	}
 }
 module.exports = new UsersService();

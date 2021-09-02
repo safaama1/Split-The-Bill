@@ -1,6 +1,8 @@
 const express = require('express');
 const path = require('path');
 const router = express.Router();
+const billService = require('../services/Bill');
+router.use(express.json());
 
 function authorize(req, res, next) {
 	if (!req.session.authenticated) {
@@ -55,6 +57,18 @@ const billItems = () => {
 	];
 };
 
+router.get('/api',async (req, res) => {
+	res.redirect(307,req.baseUrl + '/0');
+});
+router.post('/api', async (req, res) => {
+	const { rawText, Totalquantity, Totalamount, items } = req.body;
+	try {
+		const bill = await billService.addBill(req.session.username, rawText,parseFloat( Totalquantity.replace(/,/g, ''), 10), parseFloat(Totalamount.replace(/,/g, ''),10), items);
+		return res.redirect(307,req.baseUrl + '/0');
+	} catch (error) {
+		console.log(error);
+	}
+});
 router.get('/:roomId', authorize, (req, res) => {
 	res.render('main', { layout: 'billPage', items: billItems() });
 });
