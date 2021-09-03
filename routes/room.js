@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const router = express.Router();
 const billService = require('../services/Bill');
+const Bills = require('../models/Bill');
 router.use(express.json());
 
 function authorize(req, res, next) {
@@ -11,65 +12,31 @@ function authorize(req, res, next) {
 	next();
 }
 
-const billItems = () => {
-	return [
-		[
-			'Item',
-			'Qty',
-			'Price',
-			'Amt'
-		],
-		[
-			'Moto M',
-			'2',
-			'18000.00',
-			'32,400.00'
-		],
-		[
-			'Moto X',
-			'1',
-			'25000.00',
-			'22,500.00'
-		],
-		[
-			'service',
-			'1',
-			'100000',
-			'1,000.00'
-		],
-		[
-			'Mato Turbo',
-			'1',
-			'20000',
-			'200.00'
-		],
-		[
-			'Mato Original',
-			'1',
-			'50000',
-			'500.00'
-		],
-		[
-			'SubTotal',
-			'6',
-			'56,600.00'
-		]
-	];
-};
-
-router.get('/api',async (req, res) => {
-	res.redirect(307,req.baseUrl + '/0');
-});
 router.post('/api', async (req, res) => {
 	const { rawText, Totalquantity, Totalamount, items } = req.body;
 	try {
-		const bill = await billService.addBill(req.session.username, rawText,parseFloat( Totalquantity.replace(/,/g, ''), 10), parseFloat(Totalamount.replace(/,/g, ''),10), items);
-		return res.redirect(307,req.baseUrl + '/0');
+		const bill = await billService.addBill(req.session.username, rawText, parseFloat(Totalquantity.replace(/,/g, ''), 10), parseFloat(Totalamount.replace(/,/g, ''), 10), items);
+		if (!bill) {
+			return res.redirect('/account/login');
+		}
+		req.session.authenticated = true;
+		req.session.userId = bill._id;
+		res.redirect(req.baseUrl + '/' + bill._id);
+
 	} catch (error) {
 		console.log(error);
 	}
 });
-router.get('/:roomId', authorize, (req, res) => {
+
+router.get('/:roomId', authorize, async (req, res) => {
+	const { roomId } = req.params;
+	if (!roomId) {
+		return res.sendStatus(400); // bad request
+	}
+	const bill = await Bills.findById(roomId).lean();
+	const billItems = () => {
+		return bill.items ;
+	};
 	res.render('main', { layout: 'billPage', items: billItems() });
 });
 

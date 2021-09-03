@@ -18,7 +18,7 @@ mongoose.connect('mongodb://localhost:27017', {
 	useCreateIndex: true,
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
-	
+
 });
 
 app.set('view engine', 'hbs');
@@ -28,6 +28,19 @@ app.engine('hbs', handlebars({
 	extname: 'hbs',
 	defaultLayout: 'billPage'
 }));
+
+var hbs = handlebars.create({});
+
+hbs.handlebars.registerHelper('times', function (n, block) {
+	var accum = '';
+	for (var i = 0; i < n; ++i)
+		accum += block.fn(i);
+	return accum;
+});
+
+hbs.handlebars.registerHelper('inc', function (value, options) {
+	return parseInt(value) + 1;
+});
 
 // cookie parsing middleware 
 app.use(cookieParser());
