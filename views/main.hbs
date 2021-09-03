@@ -1,6 +1,57 @@
-<h1>ITEMS</h1>
-<ul> 
-    {{#each items}}
-    <li>{{this}}</li>
-    {{/each}}
-</ul>
+<div class="navbar__container">
+    <a href="/account" id="navbar__logo"><i class="fas fa-money-bill-wave">&nbsp;&nbsp;</i>Split The Bill</a>
+    <div class="navbar__toggle" id="mobile-menu">
+        <span class="bar"></span> <span class="bar"></span>
+        <span class="bar"></span>
+    </div>
+    <ul class="navbar__menu">
+        <li class="navbar__item">
+            <a href="#" class="navbar__links2">Welcome Safa !</a>
+        </li>
+        <li class="navbar__item">
+            <a href="#" class="navbar__links">Home</a>
+        </li>
+        <li class="navbar__item">
+            <a href="/" class="navbar__links">About Us</a>
+        </li>
+        <li class="navbar__item">
+            <a href="/account/logout" class="navbar__links">Sign out&nbsp;&nbsp;<i class="fas fa-sign-out-alt"></i></a>
+        </li>
+    </ul>
+</div>
+<!-- </nav> -->
+<div class="main2">
+    <div class="main__container2">
+        <table class="content-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Qty</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each items}}
+                <tr>
+                    <td> {{inc @index}}</td>
+                    <td> {{this.name}} </td>
+                    <td>
+                        <select id="ddlViewBy">
+                            <option value="0">
+                                0
+                            </option>
+                            {{#times this.quantity }}
+                            <option value="{{inc this}}">
+                                {{inc this}}
+                            </option>
+                            {{/times}}
+                        </select>
+                    </td>
+                    <td>{{this.price}} ₪</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
