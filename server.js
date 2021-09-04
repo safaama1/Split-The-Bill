@@ -38,6 +38,7 @@ hbs.handlebars.registerHelper('times', function (n, block) {
 	return accum;
 });
 
+// eslint-disable-next-line no-unused-vars
 hbs.handlebars.registerHelper('inc', function (value, options) {
 	return parseInt(value) + 1;
 });

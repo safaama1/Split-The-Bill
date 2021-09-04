@@ -72,6 +72,20 @@ router.get('/', authorize, async (req, res) => {
 	res.sendFile(path.resolve('pages/profile.html'));
 });
 
+
+//Todo add deletete user functionality
+// router.get('/del/:roomId', authorize, async (req, res) => {
+// 	try{
+// 		//get Bill that has Billnum equal to room Id
+// 		const { roomId } = req.params;
+// 		await billService.deleteBillByBillNum(parseInt(roomId,10));
+// 		res.sendFile(path.resolve('./pages/joinRoom.html'));
+// 	}	
+// 	catch(error){
+// 		console.log(error);
+// 		return res.sendStatus(400); // bad request
+// 	}
+// });
 function validateEmail(email) {
 	var re = /\S+@\S+\.\S+/;
 	return re.test(email);
@@ -108,9 +122,10 @@ function CheckPasswordStrength(password) {
 		color = 'Red';
 		break;
 	case 2:
-		color = 'darkorange';
+		color = 'Red';
 		break;
 	case 3:
+		color = 'Orange';
 		break;
 	case 4:
 		color = 'Green';
@@ -119,6 +134,11 @@ function CheckPasswordStrength(password) {
 		color = 'darkgreen';
 		break;
 	}
+	//TODO uncomment code when final version of site is finshed 
+	//code is commented now for easier testing
+	// if (password.length < 8) {
+	// 	return 'Red';
+	// }
 	return color;
 }
 module.exports = router;

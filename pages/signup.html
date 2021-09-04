@@ -50,10 +50,12 @@
                     color = "Red";
                     break;
                 case 2:
-                    passwordStrength = "Password is Good.";
-                    color = "darkorange";
+                    passwordStrength = "Password is Weak.";
+                    color = "Red";
                     break;
                 case 3:
+                    passwordStrength = "Password is Good.";
+                        color = "darkorange";
                     break;
                 case 4:
                     passwordStrength = "Password is Strong.";
@@ -64,6 +66,11 @@
                     color = "darkgreen";
                     break;
             }
+                //TODO uncomment code in final version
+            	// if (password.length < 8) {
+	            // 	   passwordStrength = "Password must be 8 or more charachters.";
+                //      color = "darkgreen";
+	            // }
             password_strength.innerHTML = passwordStrength;
             password_strength.style.color = color;
         }
