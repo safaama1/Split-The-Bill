@@ -24,7 +24,8 @@
     "express-handlebars": "^5.3.3",
     "express-session": "^1.17.2",
     "mongoose": "^5.13.7",
-    "node-fetch": "^2.6.1"
+    "node-fetch": "^2.6.1",
+    "socket.io": "^4.2.0"
   },
   "devDependencies": {
     "eslint": "^7.32.0",

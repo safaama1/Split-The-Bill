@@ -40,13 +40,13 @@ async function recognizeBill() {
 	var billData = [];
 	// eslint-disable-next-line no-undef
 
-	//	await Tesseract.recognize(input.files[0],'eng',{ preserve_interword_spaces: 1,logger:m =>{progress.innerHTML=m['progress'].toFixed(3); }}).then(result=>{
+	// await Tesseract.recognize(input.files[0],'eng',{ preserve_interword_spaces: 1,logger:m =>{progress.innerHTML=m['progress'].toFixed(3); }}).then(result=>{
+	// eslint-disable-next-line no-undef
 	await Tesseract.recognize(input.files[0], 'eng', { preserve_interword_spaces: 1 }).then(result => {
 		billData.push(result.data.text);
 		return result.data.text.split('\n');
 	}).then(result => {
 		billData.push(parseBill(result));
-		return parseBill(result);
 	}).catch((err) => {
 		console.log(err.message);
 	});
@@ -142,7 +142,6 @@ input.addEventListener('change', () => {
 		const Totalquantity = billDetails[2];
 		const Totalamount = billDetails[3];
 		const items = JSON.stringify(Object.assign({}, billDetails[1]));
-		console.log(billDetails);
 
 		const data = { rawText, Totalquantity, Totalamount, items };
 		const url = '/account/room/api';

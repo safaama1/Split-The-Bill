@@ -3,7 +3,7 @@ class UsersService {
 	constructor() {}
 	// add a new user
 	async addUser(username, email, password) {
-		return await UserModel.create({ username, email, password });
+		return await UserModel.create({ username, email, password});
 	}
 
 	// find and return a user by username
@@ -16,11 +16,16 @@ class UsersService {
 	async findById(id) {
 		return UserModel.findById(id);
 	}
+	async removUserById(id)
+	{
+		await UserModel.findOneAndDelete(
+			{ _id: id }
+		);
+	}
 	async addBill(userName,bill){
-		//TODO fix method
-		UserModel.updateOne(
-			{ name: userName },
-			{ $push: { bills:  bill } }
+		UserModel.findOneAndUpdate(
+			{ name: userName }, 
+			{ $push: { bills: bill  } }
 		);
 	}
 }
