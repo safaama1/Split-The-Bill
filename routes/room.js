@@ -32,13 +32,13 @@ router.post('/api', async (req, res) => {
 //todo check if this user is the owner of bill first i.e. the one who scanned it 
 //deletes bill with billnum equal to roomid
 router.get('/del/:roomId', authorize, async (req, res) => {
-	try{
+	try {
 		//get Bill that has Billnum equal to room Id
 		const { roomId } = req.params;
-		await billService.deleteByBillNum(parseInt(roomId,10));
+		await billService.deleteByBillNum(parseInt(roomId, 10));
 		res.sendFile(path.resolve('./pages/joinRoom.html'));
-	}	
-	catch(error){
+	}
+	catch (error) {
 		console.log(error);
 		return res.sendStatus(400); // bad request
 	}
@@ -46,11 +46,11 @@ router.get('/del/:roomId', authorize, async (req, res) => {
 
 //reroutes user to the romm with index room_id
 router.post('/routeRoom', authorize, async (req, res) => {
-	try{
+	try {
 		const { room_id } = req.body;
-		res.redirect(req.baseUrl + '/'+ room_id);
+		res.redirect(req.baseUrl + '/' + room_id);
 	}
-	catch(error){
+	catch (error) {
 		console.log(error);
 		return res.sendStatus(400); // bad request
 	}
@@ -58,21 +58,22 @@ router.post('/routeRoom', authorize, async (req, res) => {
 
 
 router.get('/:roomId', authorize, async (req, res) => {
-	try{
+	try {
 		//get Bill that has Billnum equal to room Id
 		const { roomId } = req.params;
 
-		let BillDocument=await billService.findByBillNum(roomId);
+		let BillDocument = await billService.findByBillNum(roomId);
 
 		//convert BillDocument to js object pogos so that handelbars is able to use it 
-		let bill=JSON.parse(JSON.stringify(BillDocument));
+		let bill = JSON.parse(JSON.stringify(BillDocument));
 
 		const billItems = () => {
-			return bill.items ;
+			return bill.items;
 		};
-		res.render('main', { layout: 'billPage', userName:req.session.username ,items: billItems() });
+		var length = Object.keys(bill.items).length;
+		res.render('main', { layout: 'billPage', userName: req.session.username, items: billItems(), billNum: roomId, size: length });
 	}
-	catch(error){
+	catch (error) {
 		console.log(error);
 		return res.sendStatus(400); // bad request
 	}

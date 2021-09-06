@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 function getCookieObject() {
 	return document.cookie
 		.split(';')
