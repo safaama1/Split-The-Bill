@@ -37,6 +37,7 @@ function startsWithFRES(array) {
 }
 //uses tesseract.js to identify text in the image provided by the user then activates the function parse bill
 async function recognizeBill() {
+	document.getElementById('loading').innerHTML = 'Scanning<br><div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>';
 	var billData = [];
 	// eslint-disable-next-line no-undef
 
@@ -61,7 +62,7 @@ async function recognizeBill() {
 	billData[1].pop();
 
 	billData[1].shift();
-
+	
 	return billData;
 }
 //checks if a string represents a number for example: ('127' => true) ('2h1e'=>false) (22=>false (not a string))
@@ -133,6 +134,7 @@ async function loadEdit() {
 
 input.addEventListener('change', () => {
 	loadEdit().then(((billDetails) => {
+		
 
 		if (!input.files) {
 			return null;
@@ -153,7 +155,7 @@ input.addEventListener('change', () => {
 			},
 			body: JSON.stringify(data)
 		};
-		fetch(url, options).then(response =>{
+		fetch(url, options).then(response => {
 			// take the url that the redirect sent in the server side
 			window.location.href = response.url;
 		});

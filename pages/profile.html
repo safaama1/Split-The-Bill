@@ -45,6 +45,7 @@
           <h1>SAVE TIME AND MONEY</h1>
           <p>Join your friends and split the bill or scan the bill and let your friends join
           </p>
+          <p id = "loading" style="color:white;"></p>
           <br>
           <br>
           <label class="main__btn2">
@@ -97,6 +98,7 @@
   <script src="/assets/js/profile.js"></script>
   <!-- script to show the massage "Welcome {userName}" at the top of the profile page -->
   <script src="/assets/js/utility.js"></script>
+  <!-- script that take the username feom the cookie and updates the welocme massage -->
   <script defer>
     var cookieObject = getCookieObject();
     console.log(cookieObject);
@@ -104,7 +106,8 @@
   </script>
   <div id="progress"></div>
   <script src="/assets/js/drop-down.js"></script>
-  <script defer src="/assets/js/imageToText.js"></script>
+  <script defer src="/assets/js/imageToText.js">
+  </script>
 </body>
 
 </html>

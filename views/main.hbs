@@ -1,25 +1,21 @@
 <div class="navbar__container">
-    <a href="/account" id="navbar__logo"><i class="fas fa-money-bill-wave">&nbsp;&nbsp;</i>Split The Bill</a>
+    <a href="#" id="navbar__logo"><i class="fas fa-money-bill-wave">&nbsp;&nbsp;</i>Split The Bill</a>
     <div class="navbar__toggle" id="mobile-menu">
         <span class="bar"></span> <span class="bar"></span>
         <span class="bar"></span>
     </div>
     <ul class="navbar__menu">
         <li class="navbar__item">
-            <a href="#" class="navbar__links2">Welcome {{this.userName}} !</a>
-        </li>
-        <li class="navbar__item">
-            <a href="#" class="navbar__links">Home</a>
-        </li>
-        <li class="navbar__item">
-            <a href="/" class="navbar__links">About Us</a>
-        </li>
-        <li class="navbar__item">
-            <a href="/account/logout" class="navbar__links">Sign out&nbsp;&nbsp;<i class="fas fa-sign-out-alt"></i></a>
+            <a href="/account/" class="navbar__links">Go Back&nbsp;&nbsp;<i class="fas fa-arrow-left"></i></a>
         </li>
     </ul>
 </div>
 <!-- </nav> -->
+<br>
+<br>
+<h1 style="text-align:center;">
+    Room ID : {{billNum}}
+</h1>
 <div class="main2">
     <div class="main__container2">
         <table class="content-table">
@@ -37,7 +33,7 @@
                     <td> {{inc @index}}</td>
                     <td> {{this.name}} </td>
                     <td>
-                        <select id="ddlViewBy">
+                        <select id="ddlViewBy{{inc @index}}" onchange="updatePrice({{inc @index}})">
                             <option value="0">
                                 0
                             </option>
@@ -48,10 +44,44 @@
                             {{/times}}
                         </select>
                     </td>
-                    <td>{{this.price}} ₪</td>
+                    <td id="allPrice{{inc @index}}">0 ₪</td>
                 </tr>
                 {{/each}}
             </tbody>
         </table>
     </div>
+    <p id = "totalP" style="text-align:center;"> 
+        Total Price : 0 ₪ 
+    </p>
+    <br>
+    <div style="text-align:center;">
+        <button class="main__btn"><a href="/account/">Finish&nbsp;&nbsp;<i class="fas fa-money-bill-wave"></i> </a></button>
+    </div>
 </div>
+<script defer>
+    var prices = [];
+    var qtys = [];
+    {{#each items}}
+       prices.push({{this.price}})
+     {{/each}}
+     for(var i = 0 ; i< {{size}} ; i++){
+         qtys[i] = 0 ;
+     }
+    function updatePrice(id_) {
+        var e = document.getElementById('ddlViewBy' + id_.toString());
+        var selected = e.value;    
+        qtys[id_-1] = selected;       
+        document.getElementById('allPrice' + id_.toString()).innerHTML = numberWithCommas(prices[id_-1] * selected) + ' ₪';
+        totalPrice();
+    }
+   function totalPrice() {
+        total = 0 ;
+        for (var i = 0; i < prices.length; i++) {
+            total += prices[i] * qtys[i] ; 
+        }
+        document.getElementById('totalP' ).innerHTML ='Total Price : '+ numberWithCommas(total) + ' ₪'
+    }
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
+</script>

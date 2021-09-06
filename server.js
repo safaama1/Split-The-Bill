@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 const express = require('express');
 const path = require('path');
 const accountRouter = require('./routes/account');
@@ -6,6 +7,17 @@ const session = require('express-session');
 const mongoose = require('mongoose');
 const handlebars = require('express-handlebars');
 const app = express();
+const http = require('http');
+const server = http.createServer(app);
+const { Server } = require('socket.io');
+const io = new Server(server);
+
+io.sockets.on('connection', function (socket) {
+	socket.on('create', function (room) {
+		socket.join(room);
+	});
+});
+
 
 app.use('/assets', express.static('static-assets'));
 mongoose.connect('mongodb://localhost:27017', {
@@ -29,8 +41,11 @@ app.engine('hbs', handlebars({
 	defaultLayout: 'billPage'
 }));
 
+// helpful handlebars functions (used in file billPage.hbs)
 var hbs = handlebars.create({});
 
+// function that creates a loop that executes 'n' times 
+// #times 12 (same as)=> for(i=0 ; i < 12 ; i++)  
 hbs.handlebars.registerHelper('times', function (n, block) {
 	var accum = '';
 	for (var i = 0; i < n; ++i)
@@ -38,7 +53,8 @@ hbs.handlebars.registerHelper('times', function (n, block) {
 	return accum;
 });
 
-// eslint-disable-next-line no-unused-vars
+// function that increases the value of 'value' by one
+// #inc 4 (same as)=> 4++
 hbs.handlebars.registerHelper('inc', function (value, options) {
 	return parseInt(value) + 1;
 });
@@ -65,4 +81,7 @@ app.use('/account', accountRouter);
 app.get('/', (req, res) => res.sendFile(path.resolve('pages/main.html')));
 app.use('/', (req, res) => res.sendStatus(404));
 
-app.listen(3000);
+// app.listen(3000);
+server.listen(3000, () => {
+	console.log('listening on *:3000');
+});
