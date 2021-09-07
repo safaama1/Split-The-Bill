@@ -58,20 +58,35 @@
         <button class="main__btn"><a href="/account/">Finish&nbsp;&nbsp;<i class="fas fa-money-bill-wave"></i> </a></button>
     </div>
 </div>
+
+<script src="/socket.io/socket.io.js"></script>
 <script defer>
+    var socket = io.connect();
+    socket.emit('join', '{{billNum}}');
+    
     var prices = [];
+    var full_qtys=[];
+    var tmp_qtys=[];
     var qtys = [];
     {{#each items}}
-       prices.push({{this.price}})
+       prices.push({{this.price}});
+       full_qtys.push({{this.quantity}});
+       tmp_qtys.push({{this.quantity}});
      {{/each}}
      for(var i = 0 ; i< {{size}} ; i++){
          qtys[i] = 0 ;
      }
+         socket.on('update_items', function(user, item_id, quantity){
+             if(user!=='{{userName}}')
+            updateSelect(item_id , quantity);
+	});
     function updatePrice(id_) {
         var e = document.getElementById('ddlViewBy' + id_.toString());
+        var prevSelcted= qtys[id_-1];
         var selected = e.value;    
         qtys[id_-1] = selected;       
         document.getElementById('allPrice' + id_.toString()).innerHTML = numberWithCommas(prices[id_-1] * selected) + ' ₪';
+        socket.emit('choseItem','{{this.userName}}',id_,selected-prevSelcted);
         totalPrice();
     }
    function totalPrice() {
@@ -83,5 +98,20 @@
     }
     function numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
+    function updateSelect(id_ , selected) {
+        var e = document.getElementById('ddlViewBy' + id_.toString());
+        var val = e.value;
+        var inner = "";
+        
+
+        if(val <= Math.abs (tmp_qtys[id_ -1 ] - selected))  {
+            for(var i=0; i< tmp_qtys[id_ -1 ] - selected +  1 ; i++){
+                inner += "<option value="+i +">" + i + "</option>"
+            }
+            e.innerHTML = inner;
+            tmp_qtys[id_-1] -= selected ;
+        }
+        e.value = val;
     }
 </script>
