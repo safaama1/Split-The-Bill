@@ -12,9 +12,20 @@ const server = http.createServer(app);
 const { Server } = require('socket.io');
 const io = new Server(server);
 
-io.sockets.on('connection', function (socket) {
-	socket.on('create', function (room) {
+io.sockets.on('connection', function(socket) {
+
+	socket.on('join', function(room) {
 		socket.join(room);
+		//console.log('socket joined room no.'+room);
+
+		socket.on('choseItem', function(user, item_id, quantity ){
+			io.to(room).emit('update_items',user, item_id, quantity);
+
+		});
+		
+	});
+	socket.on('disconnect', () => {
+		//console.log('user disconnected');
 	});
 });
 
@@ -83,5 +94,4 @@ app.use('/', (req, res) => res.sendStatus(404));
 
 // app.listen(3000);
 server.listen(3000, () => {
-	console.log('listening on *:3000');
 });
