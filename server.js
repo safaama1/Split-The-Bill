@@ -87,11 +87,23 @@ app.use(session({
 
 const roomRouter = require('./routes/room');
 app.use('/account/room', roomRouter);
-
 app.use('/account', accountRouter);
 app.get('/', (req, res) => res.sendFile(path.resolve('pages/main.html')));
+app.get('/aboutUs',(req, res) => res.sendFile(path.resolve('pages/aboutUs.html')));
+app.post('/contactUs', async (req, res) => {
+	const { name,email,message } = req.body;
+	try {
+		
+		console.log(name+' sent this message : '+ message +'\nto reply contact this email : '+email);
+		res.redirect(req.baseUrl+'/');
+	} catch (error) {
+		console.log(error);
+	}
+});
+
 app.use('/', (req, res) => res.sendStatus(404));
 
 // app.listen(3000);
-server.listen(3000, () => {
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => {
 });
