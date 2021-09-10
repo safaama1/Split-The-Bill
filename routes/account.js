@@ -18,7 +18,7 @@ function ensureLoggedOut(req, res, next) {
 }
 /** should return a login page */
 router.get('/login', ensureLoggedOut, (req, res) => {
-	res.sendFile(path.resolve('pages/login.html'));
+	res.sendFile(path.resolve('pages/logIn.html'));
 });
 
 /** should handle login logic and redirect to homepage if needed */
@@ -39,7 +39,7 @@ router.post('/login', async (req, res) => {
 
 /** should return a signup page */
 router.get('/signup', ensureLoggedOut, (req, res) => {
-	res.sendFile(path.resolve('pages/signUp.html'));
+	res.sendFile(path.resolve('pages/signup.html'));
 });
 
 /** should handle signup logic, log in the user, and redirect to homepage */
