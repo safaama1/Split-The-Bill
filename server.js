@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 const express = require('express');
 const path = require('path');
+require('dotenv').config();
 const accountRouter = require('./routes/account');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
@@ -12,17 +13,17 @@ const server = http.createServer(app);
 const { Server } = require('socket.io');
 const io = new Server(server);
 
-io.sockets.on('connection', function(socket) {
+io.sockets.on('connection', function (socket) {
 
-	socket.on('join', function(room) {
+	socket.on('join', function (room) {
 		socket.join(room);
 		//console.log('socket joined room no.'+room);
 
-		socket.on('choseItem', function(user, item_id, quantity ){
-			io.to(room).emit('update_items',user, item_id, quantity);
+		socket.on('choseItem', function (user, item_id, quantity) {
+			io.to(room).emit('update_items', user, item_id, quantity);
 
 		});
-		
+
 	});
 	socket.on('disconnect', () => {
 		//console.log('user disconnected');
@@ -31,17 +32,13 @@ io.sockets.on('connection', function(socket) {
 
 
 app.use('/assets', express.static('static-assets'));
-mongoose.connect('mongodb://localhost:27017', {
+mongoose.connect(process.env.DB_URI, {
 	dbName: 'SplitTheBill',
-	auth: {
-		user: 'root',
-		password: 'example',
-		authdb: 'admin'
-	},
+	user: process.env.DB_USER,
+	pass: process.env.DB_PASS,
 	useCreateIndex: true,
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
-
 });
 
 app.set('view engine', 'hbs');
@@ -89,13 +86,13 @@ const roomRouter = require('./routes/room');
 app.use('/account/room', roomRouter);
 app.use('/account', accountRouter);
 app.get('/', (req, res) => res.sendFile(path.resolve('pages/main.html')));
-app.get('/aboutUs',(req, res) => res.sendFile(path.resolve('pages/aboutUs.html')));
+app.get('/aboutUs', (req, res) => res.sendFile(path.resolve('pages/aboutUs.html')));
 app.post('/contactUs', async (req, res) => {
-	const { name,email,message } = req.body;
+	const { name, email, message } = req.body;
 	try {
-		
-		console.log(name+' sent this message : '+ message +'\nto reply contact this email : '+email);
-		res.redirect(req.baseUrl+'/');
+
+		console.log(name + ' sent this message : ' + message + '\nto reply contact this email : ' + email);
+		res.redirect(req.baseUrl + '/');
 	} catch (error) {
 		console.log(error);
 	}
