@@ -134,11 +134,9 @@ function CheckPasswordStrength(password) {
 		color = 'darkgreen';
 		break;
 	}
-	//TODO uncomment code when final version of site is finshed 
-	//code is commented now for easier testing
-	// if (password.length < 8) {
-	// 	return 'Red';
-	// }
+	if (password.length < 8) {
+		return 'Red';
+	}
 	return color;
 }
 module.exports = router;
