@@ -5,5 +5,5 @@ From this account, each diner can choose items according to what he has eaten, a
 **Application Functions**:
 1. Scanning the receipt and turning it into a digital list of items & prices where items can be marked and selected.
 2. Sharing all users on the same digital list.
-3. The user selects a number of items from the list and the application calculates their total price.
+3. The user selects several items from the list and the application calculates their total price.
 4. The list is updated for all users and next to each item is the name of the person who selected it.
