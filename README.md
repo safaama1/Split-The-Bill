@@ -7,3 +7,5 @@ From this account, each diner can choose items according to what he has eaten, a
 2. Sharing all users on the same digital list.
 3. The user selects several items from the list and the application calculates their total price.
 4. The list is updated for all users and next to each item is the name of the person who selected it.
+
+We used socket.io to let people join or create rooms that show the items on the bill; every time a person chooses an item, the bill gets updated and shows the other users in the room that the item has been taken.<br/>
